@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .containers {
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto 100px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #005a4d;
+        }
+        #city-list {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 80%;
+    position: relative; /* Change this to relative */
+    background-color: white;
+    margin-top: 10px; /* Add margin to push it below the input field */
+    z-index: 120;
+}
+
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+        #weather {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .weather-item {
+            margin: 10px 0;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!--Header-->
+    <div class="header">
+        <div class="container">
+            <header class="d-flex justify-content-center py-3">
+              <ul class="nav nav-pills">
+                <li class="nav-item"><a href="home.html" class="nav-link" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link active">Services</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="contacts.html" class="nav-link">Contacts</a></li>
+              </ul>
+            </header>
+          </div>
+    </div>
+
+    <div class="containers">
+        <h1>Weather Forecast</h1>
+        
+        <form id="weather-form">
+            <input type="text" id="city" placeholder="Enter city name..." autocomplete="off" required>
+            <div id="city-list"></div>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        <div id="weather">
+            <!-- Weather data will be displayed here -->
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <div class="container-fluid bg-dark text-light">
+        <footer class="py-5">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <a href="/" class="d-flex align-items-center mb-3 link-light text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Logo"><use xlink:href="#bootstrap"></use></svg>
+              </a>
+              <p class="text-muted">© 2024 Your Company, Inc.</p>
+            </div>
+      
+            <div class="col-md-2 mb-3">
+              <h5>Company</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Home</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Products</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Services</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">About</a></li>
+              </ul>
+            </div>
+      
+            <div class="col-md-2 mb-3">
+              <h5>Support</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Contact</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">FAQs</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Terms of Service</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Privacy Policy</a></li>
+              </ul>
+            </div>
+      
+            <div class="col-md-4 mb-3">
+              <h5>Follow Us</h5>
+              <ul class="list-unstyled d-flex">
+                <li class="ms-3"><a class="link-light" href="#"><img src="instagram.svg" alt="Instagram"></a></li>
+                <li class="ms-3"><a class="link-light" href="#"><img src="github.svg" alt="GitHub"></a></li>
+                <li class="ms-3"><a class="link-light" href="#"><img src="linkedin.svg" alt="LinkedIn"></a></li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </div>
+    <script>
+        const cityInput = document.getElementById('city');
+        const cityListDiv = document.getElementById('city-list');
+        const weatherDiv = document.getElementById('weather');
+
+        // A sample list of cities (you can extend this or fetch dynamically)
+        const cities = [
+    { city: 'Adilabad', state: 'Andhra Pradesh (AP)' },
+{ city: 'Anantapur', state: 'Andhra Pradesh (AP)' },
+{ city: 'Chittoor', state: 'Andhra Pradesh (AP)' },
+{ city: 'Kakinada', state: 'Andhra Pradesh (AP)' },
+{ city: 'Guntur', state: 'Andhra Pradesh (AP)' },
+{ city: 'Hyderabad', state: 'Andhra Pradesh (AP)' },
+{ city: 'Karimnagar', state: 'Andhra Pradesh (AP)' },
+{ city: 'Khammam', state: 'Andhra Pradesh (AP)' },
+{ city: 'Krishna', state: 'Andhra Pradesh (AP)' },
+{ city: 'Kurnool', state: 'Andhra Pradesh (AP)' },
+{ city: 'Mahbubnagar', state: 'Andhra Pradesh (AP)' },
+{ city: 'Medak', state: 'Andhra Pradesh (AP)' },
+{ city: 'Nalgonda', state: 'Andhra Pradesh (AP)' },
+{ city: 'Nizamabad', state: 'Andhra Pradesh (AP)' },
+{ city: 'Ongole', state: 'Andhra Pradesh (AP)' },
+{ city: 'Srikakulam', state: 'Andhra Pradesh (AP)' },
+{ city: 'Nellore', state: 'Andhra Pradesh (AP)' },
+{ city: 'Visakhapatnam', state: 'Andhra Pradesh (AP)' },
+{ city: 'Vizianagaram', state: 'Andhra Pradesh (AP)' },
+{ city: 'Warangal', state: 'Andhra Pradesh (AP)' },
+{ city: 'Eluru', state: 'Andhra Pradesh (AP)' },
+{ city: 'Kadapa', state: 'Andhra Pradesh (AP)' },
+
+// Arunachal Pradesh (AR)
+{ city: 'Anjaw', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Changlang', state: 'Arunachal Pradesh (AR)' },
+{ city: 'East Siang', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Kurung Kumey', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Lohit', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Lower Dibang Valley', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Lower Subansiri', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Papum Pare', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Tawang', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Tirap', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Dibang Valley', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Upper Siang', state: 'Arunachal Pradesh (AR)' },
+{ city: 'Upper Subansiri', state: 'Arunachal Pradesh (AR)' },
+{ city: 'West Kameng', state: 'Arunachal Pradesh (AR)' },
+{ city: 'West Siang', state: 'Arunachal Pradesh (AR)' },
+
+// Assam (AS)
+{ city: 'Baksa', state: 'Assam (AS)' },
+{ city: 'Barpeta', state: 'Assam (AS)' },
+{ city: 'Bongaigaon', state: 'Assam (AS)' },
+{ city: 'Cachar', state: 'Assam (AS)' },
+{ city: 'Chirang', state: 'Assam (AS)' },
+{ city: 'Darrang', state: 'Assam (AS)' },
+{ city: 'Dhemaji', state: 'Assam (AS)' },
+{ city: 'Dima Hasao', state: 'Assam (AS)' },
+{ city: 'Dhubri', state: 'Assam (AS)' },
+{ city: 'Dibrugarh', state: 'Assam (AS)' },
+{ city: 'Goalpara', state: 'Assam (AS)' },
+{ city: 'Golaghat', state: 'Assam (AS)' },
+{ city: 'Hailakandi', state: 'Assam (AS)' },
+{ city: 'Jorhat', state: 'Assam (AS)' },
+{ city: 'Kamrup', state: 'Assam (AS)' },
+{ city: 'Kamrup Metropolitan', state: 'Assam (AS)' },
+{ city: 'Karbi Anglong', state: 'Assam (AS)' },
+{ city: 'Karimganj', state: 'Assam (AS)' },
+{ city: 'Kokrajhar', state: 'Assam (AS)' },
+{ city: 'Lakhimpur', state: 'Assam (AS)' },
+{ city: 'Marigaon', state: 'Assam (AS)' },
+{ city: 'Nagaon', state: 'Assam (AS)' },
+{ city: 'Nalbari', state: 'Assam (AS)' },
+{ city: 'Sibsagar', state: 'Assam (AS)' },
+{ city: 'Sonitpur', state: 'Assam (AS)' },
+{ city: 'Tinsukia', state: 'Assam (AS)' },
+{ city: 'Udalguri', state: 'Assam (AS)' },
+
+// Bihar (BR)
+{ city: 'Araria', state: 'Bihar (BR)' },
+{ city: 'Arwal', state: 'Bihar (BR)' },
+{ city: 'Aurangabad', state: 'Bihar (BR)' },
+{ city: 'Banka', state: 'Bihar (BR)' },
+{ city: 'Begusarai', state: 'Bihar (BR)' },
+{ city: 'Bhagalpur', state: 'Bihar (BR)' },
+{ city: 'Bhojpur', state: 'Bihar (BR)' },
+{ city: 'Buxar', state: 'Bihar (BR)' },
+{ city: 'Darbhanga', state: 'Bihar (BR)' },
+{ city: 'East Champaran', state: 'Bihar (BR)' },
+{ city: 'Gaya', state: 'Bihar (BR)' },
+{ city: 'Gopalganj', state: 'Bihar (BR)' },
+{ city: 'Jamui', state: 'Bihar (BR)' },
+{ city: 'Jehanabad', state: 'Bihar (BR)' },
+{ city: 'Kaimur', state: 'Bihar (BR)' },
+{ city: 'Katihar', state: 'Bihar (BR)' },
+{ city: 'Khagaria', state: 'Bihar (BR)' },
+{ city: 'Kishanganj', state: 'Bihar (BR)' },
+{ city: 'Lakhisarai', state: 'Bihar (BR)' },
+{ city: 'Madhepura', state: 'Bihar (BR)' },
+{ city: 'Madhubani', state: 'Bihar (BR)' },
+{ city: 'Munger', state: 'Bihar (BR)' },
+{ city: 'Muzaffarpur', state: 'Bihar (BR)' },
+{ city: 'Nalanda', state: 'Bihar (BR)' },
+{ city: 'Nawada', state: 'Bihar (BR)' },
+{ city: 'Patna', state: 'Bihar (BR)' },
+{ city: 'Purnia', state: 'Bihar (BR)' },
+{ city: 'Rohtas', state: 'Bihar (BR)' },
+{ city: 'Saharsa', state: 'Bihar (BR)' },
+{ city: 'Samastipur', state: 'Bihar (BR)' },
+{ city: 'Saran', state: 'Bihar (BR)' },
+{ city: 'Sheikhpura', state: 'Bihar (BR)' },
+{ city: 'Sheohar', state: 'Bihar (BR)' },
+{ city: 'Sitamarhi', state: 'Bihar (BR)' },
+{ city: 'Siwan', state: 'Bihar (BR)' },
+{ city: 'Supaul', state: 'Bihar (BR)' },
+{ city: 'Vaishali', state: 'Bihar (BR)' },
+{ city: 'West Champaran', state: 'Bihar (BR)' },
+
+// Chandigarh (CH)
+{ city: 'Chandigarh', state: 'Chandigarh (CH)' },
+
+// Chhattisgarh (CG)
+{ city: 'Bastar', state: 'Chhattisgarh (CG)' },
+{ city: 'Bijapur', state: 'Chhattisgarh (CG)' },
+{ city: 'Bilaspur', state: 'Chhattisgarh (CG)' },
+{ city: 'Dantewada', state: 'Chhattisgarh (CG)' },
+{ city: 'Dhamtari', state: 'Chhattisgarh (CG)' },
+{ city: 'Durg', state: 'Chhattisgarh (CG)' },
+{ city: 'Jashpur', state: 'Chhattisgarh (CG)' },
+{ city: 'Janjgir-Champa', state: 'Chhattisgarh (CG)' },
+{ city: 'Korba', state: 'Chhattisgarh (CG)' },
+{ city: 'Koriya', state: 'Chhattisgarh (CG)' },
+{ city: 'Kanker', state: 'Chhattisgarh (CG)' },
+{ city: 'Kabirdham (Kawardha)', state: 'Chhattisgarh (CG)' },
+{ city: 'Mahasamund', state: 'Chhattisgarh (CG)' },
+{ city: 'Narayanpur', state: 'Chhattisgarh (CG)' },
+{ city: 'Raigarh', state: 'Chhattisgarh (CG)' },
+{ city: 'Rajnandgaon', state: 'Chhattisgarh (CG)' },
+{ city: 'Raipur', state: 'Chhattisgarh (CG)' },
+{ city: 'Surguja', state: 'Chhattisgarh (CG)' },
+
+// Dadra and Nagar Haveli (DN)
+{ city: 'Dadra and Nagar Haveli', state: 'Dadra and Nagar Haveli (DN)' },
+
+// Daman and Diu (DD)
+{ city: 'Daman', state: 'Daman and Diu (DD)' },
+{ city: 'Diu', state: 'Daman and Diu (DD)' },
+
+// Delhi (DL)
+{ city: 'Central Delhi', state: 'Delhi (DL)' },
+{ city: 'East Delhi', state: 'Delhi (DL)' },
+{ city: 'New Delhi', state: 'Delhi (DL)' },
+{ city: 'North Delhi', state: 'Delhi (DL)' },
+{ city: 'North East Delhi', state: 'Delhi (DL)' },
+{ city: 'North West Delhi', state: 'Delhi (DL)' },
+{ city: 'South Delhi', state: 'Delhi (DL)' },
+{ city: 'South West Delhi', state: 'Delhi (DL)' },
+{ city: 'West Delhi', state: 'Delhi (DL)' },
+
+// Goa (GA)
+{ city: 'North Goa', state: 'Goa (GA)' },
+{ city: 'South Goa', state: 'Goa (GA)' },
+
+// Gujarat (GJ)
+{ city: 'Ahmedabad', state: 'Gujarat (GJ)' },
+{ city: 'Amreli', state: 'Gujarat (GJ)' },
+{ city: 'Anand', state: 'Gujarat (GJ)' },
+{ city: 'Banaskantha', state: 'Gujarat (GJ)' },
+{ city: 'Bharuch', state: 'Gujarat (GJ)' },
+{ city: 'Bhavnagar', state: 'Gujarat (GJ)' },
+{ city: 'Dahod', state: 'Gujarat (GJ)' },
+{ city: 'The Dangs', state: 'Gujarat (GJ)' },
+{ city: 'Gandhinagar', state: 'Gujarat (GJ)' },
+{ city: 'Jamnagar', state: 'Gujarat (GJ)' },
+{ city: 'Junagadh', state: 'Gujarat (GJ)' },
+{ city: 'Kutch', state: 'Gujarat (GJ)' },
+{ city: 'Kheda', state: 'Gujarat (GJ)' },
+{ city: 'Mehsana', state: 'Gujarat (GJ)' },
+{ city: 'Narmada', state: 'Gujarat (GJ)' },
+{ city: 'Navsari', state: 'Gujarat (GJ)' },
+{ city: 'Patan', state: 'Gujarat (GJ)' },
+{ city: 'Panchmahal', state: 'Gujarat (GJ)' },
+{ city: 'Porbandar', state: 'Gujarat (GJ)' },
+{ city: 'Rajkot', state: 'Gujarat (GJ)' },
+{ city: 'Sabarkantha', state: 'Gujarat (GJ)' },
+{ city: 'Surendranagar', state: 'Gujarat (GJ)' },
+{ city: 'Surat', state: 'Gujarat (GJ)' },
+{ city: 'Vyara', state: 'Gujarat (GJ)' },
+{ city: 'Vadodara', state: 'Gujarat (GJ)' },
+{ city: 'Valsad', state: 'Gujarat (GJ)' },
+
+// Haryana (HR)
+{ city: 'Ambala', state: 'Haryana (HR)' },
+{ city: 'Bhiwani', state: 'Haryana (HR)' },
+{ city: 'Faridabad', state: 'Haryana (HR)' },
+{ city: 'Fatehabad', state: 'Haryana (HR)' },
+{ city: 'Gurgaon', state: 'Haryana (HR)' },
+{ city: 'Hisar', state: 'Haryana (HR)' },
+{ city: 'Jhajjar', state: 'Haryana (HR)' },
+{ city: 'Jind', state: 'Haryana (HR)' },
+{ city: 'Karnal', state: 'Haryana (HR)' },
+{ city: 'Kaithal', state: 'Haryana (HR)' },
+{ city: 'Kurukshetra', state: 'Haryana (HR)' },
+{ city: 'Mahendragarh', state: 'Haryana (HR)' },
+{ city: 'Mewat', state: 'Haryana (HR)' },
+{ city: 'Palwal', state: 'Haryana (HR)' },
+{ city: 'Panchkula', state: 'Haryana (HR)' },
+{ city: 'Panipat', state: 'Haryana (HR)' },
+{ city: 'Rewari', state: 'Haryana (HR)' },
+{ city: 'Rohtak', state: 'Haryana (HR)' },
+{ city: 'Sirsa', state: 'Haryana (HR)' },
+{ city: 'Sonipat', state: 'Haryana (HR)' },
+{ city: 'Yamuna Nagar', state: 'Haryana (HR)' },
+
+// Himachal Pradesh (HP)
+{ city: 'Bilaspur', state: 'Himachal Pradesh (HP)' },
+{ city: 'Chamba', state: 'Himachal Pradesh (HP)' },
+{ city: 'Hamirpur', state: 'Himachal Pradesh (HP)' },
+{ city: 'Kangra', state: 'Himachal Pradesh (HP)' },
+{ city: 'Kinnaur', state: 'Himachal Pradesh (HP)' },
+{ city: 'Kullu', state: 'Himachal Pradesh (HP)' },
+{ city: 'Lahaul and Spiti', state: 'Himachal Pradesh (HP)' },
+{ city: 'Mandi', state: 'Himachal Pradesh (HP)' },
+{ city: 'Shimla', state: 'Himachal Pradesh (HP)' },
+{ city: 'Sirmaur', state: 'Himachal Pradesh (HP)' },
+{ city: 'Solan', state: 'Himachal Pradesh (HP)' },
+{ city: 'Una', state: 'Himachal Pradesh (HP)' },
+
+// Jammu and Kashmir (JK)
+{ city: 'Anantnag', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Badgam', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Bandipora', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Baramulla', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Doda', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Ganderbal', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Jammu', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Kargil', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Kathua', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Kishtwar', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Kupwara', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Kulgam', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Leh', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Poonch', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Pulwama', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Rajauri', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Ramban', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Reasi', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Samba', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Shopian', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Srinagar', state: 'Jammu and Kashmir (JK)' },
+{ city: 'Udhampur', state: 'Jammu and Kashmir (JK)' },
+
+// Jharkhand (JH)
+{ city: 'Bokaro', state: 'Jharkhand (JH)' },
+{ city: 'Chatra', state: 'Jharkhand (JH)' },
+{ city: 'Deoghar', state: 'Jharkhand (JH)' },
+{ city: 'Dhanbad', state: 'Jharkhand (JH)' },
+{ city: 'Dumka', state: 'Jharkhand (JH)' },
+{ city: 'East Singhbhum', state: 'Jharkhand (JH)' },
+{ city: 'Garhwa', state: 'Jharkhand (JH)' },
+{ city: 'Giridih', state: 'Jharkhand (JH)' },
+{ city: 'Godda', state: 'Jharkhand (JH)' },
+{ city: 'Gumla', state: 'Jharkhand (JH)' },
+{ city: 'Hazaribag', state: 'Jharkhand (JH)' },
+{ city: 'Jamtara', state: 'Jharkhand (JH)' },
+{ city: 'Khunti', state: 'Jharkhand (JH)' },
+{ city: 'Koderma', state: 'Jharkhand (JH)' },
+{ city: 'Latehar', state: 'Jharkhand (JH)' },
+{ city: 'Lohardaga', state: 'Jharkhand (JH)' },
+{ city: 'Pakur', state: 'Jharkhand (JH)' },
+{ city: 'Palamu', state: 'Jharkhand (JH)' },
+{ city: 'Ramgarh', state: 'Jharkhand (JH)' },
+{ city: 'Ranchi', state: 'Jharkhand (JH)' },
+{ city: 'Sahibganj', state: 'Jharkhand (JH)' },
+{ city: 'Seraikela Kharsawan', state: 'Jharkhand (JH)' },
+{ city: 'Simdega', state: 'Jharkhand (JH)' },
+{ city: 'West Singhbhum', state: 'Jharkhand (JH)' },
+
+// Karnataka (KA)
+{ city: 'Bagalkot', state: 'Karnataka (KA)' },
+{ city: 'Bangalore Rural', state: 'Karnataka (KA)' },
+{ city: 'Bangalore Urban', state: 'Karnataka (KA)' },
+{ city: 'Belgaum', state: 'Karnataka (KA)' },
+{ city: 'Bellary', state: 'Karnataka (KA)' },
+{ city: 'Bidar', state: 'Karnataka (KA)' },
+{ city: 'Bijapur', state: 'Karnataka (KA)' },
+{ city: 'Chamarajnagar', state: 'Karnataka (KA)' },
+{ city: 'Chikkamagaluru', state: 'Karnataka (KA)' },
+{ city: 'Chikkaballapur', state: 'Karnataka (KA)' },
+{ city: 'Chitradurga', state: 'Karnataka (KA)' },
+{ city: 'Davanagere', state: 'Karnataka (KA)' },
+{ city: 'Dharwad', state: 'Karnataka (KA)' },
+{ city: 'Dakshina Kannada', state: 'Karnataka (KA)' },
+{ city: 'Gadag', state: 'Karnataka (KA)' },
+{ city: 'Gulbarga', state: 'Karnataka (KA)' },
+{ city: 'Hassan', state: 'Karnataka (KA)' },
+{ city: 'Haveri district', state: 'Karnataka (KA)' },
+{ city: 'Kodagu', state: 'Karnataka (KA)' },
+{ city: 'Kolar', state: 'Karnataka (KA)' },
+{ city: 'Koppal', state: 'Karnataka (KA)' },
+{ city: 'Mandya', state: 'Karnataka (KA)' },
+{ city: 'Mysore', state: 'Karnataka (KA)' },
+{ city: 'Raichur', state: 'Karnataka (KA)' },
+{ city: 'Shimoga', state: 'Karnataka (KA)' },
+{ city: 'Tumkur', state: 'Karnataka (KA)' },
+{ city: 'Udupi', state: 'Karnataka (KA)' },
+{ city: 'Uttara Kannada', state: 'Karnataka (KA)' },
+{ city: 'Ramanagara', state: 'Karnataka (KA)' },
+{ city: 'Yadgir', state: 'Karnataka (KA)' },
+
+// Kerala (KL)
+{ city: 'Alappuzha', state: 'Kerala (KL)' },
+{ city: 'Ernakulam', state: 'Kerala (KL)' },
+{ city: 'Idukki', state: 'Kerala (KL)' },
+{ city: 'Kannur', state: 'Kerala (KL)' },
+{ city: 'Kasaragod', state: 'Kerala (KL)' },
+{ city: 'Kollam', state: 'Kerala (KL)' },
+{ city: 'Kottayam', state: 'Kerala (KL)' },
+{ city: 'Kozhikode', state: 'Kerala (KL)' },
+{ city: 'Malappuram', state: 'Kerala (KL)' },
+{ city: 'Palakkad', state: 'Kerala (KL)' },
+{ city: 'Pathanamthitta', state: 'Kerala (KL)' },
+{ city: 'Thrissur', state: 'Kerala (KL)' },
+{ city: 'Thiruvananthapuram', state: 'Kerala (KL)' },
+{ city: 'Wayanad', state: 'Kerala (KL)' },
+
+// Madhya Pradesh (MP)
+{ city: 'Alirajpur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Anuppur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Ashok Nagar', state: 'Madhya Pradesh (MP)' },
+{ city: 'Balaghat', state: 'Madhya Pradesh (MP)' },
+{ city: 'Barwani', state: 'Madhya Pradesh (MP)' },
+{ city: 'Betul', state: 'Madhya Pradesh (MP)' },
+{ city: 'Bhind', state: 'Madhya Pradesh (MP)' },
+{ city: 'Bhopal', state: 'Madhya Pradesh (MP)' },
+{ city: 'Burhanpur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Chhatarpur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Chhindwara', state: 'Madhya Pradesh (MP)' },
+{ city: 'Damoh', state: 'Madhya Pradesh (MP)' },
+{ city: 'Datia', state: 'Madhya Pradesh (MP)' },
+{ city: 'Dewas', state: 'Madhya Pradesh (MP)' },
+{ city: 'Dhar', state: 'Madhya Pradesh (MP)' },
+{ city: 'Dindori', state: 'Madhya Pradesh (MP)' },
+{ city: 'Guna', state: 'Madhya Pradesh (MP)' },
+{ city: 'Gwalior', state: 'Madhya Pradesh (MP)' },
+{ city: 'Harda', state: 'Madhya Pradesh (MP)' },
+{ city: 'Hoshangabad', state: 'Madhya Pradesh (MP)' },
+{ city: 'Indore', state: 'Madhya Pradesh (MP)' },
+{ city: 'Jabalpur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Jhabua', state: 'Madhya Pradesh (MP)' },
+{ city: 'Katni', state: 'Madhya Pradesh (MP)' },
+{ city: 'Khandwa (East Nimar)', state: 'Madhya Pradesh (MP)' },
+{ city: 'Khargone (West Nimar)', state: 'Madhya Pradesh (MP)' },
+{ city: 'Mandla', state: 'Madhya Pradesh (MP)' },
+{ city: 'Mandsaur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Morena', state: 'Madhya Pradesh (MP)' },
+{ city: 'Narsinghpur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Neemuch', state: 'Madhya Pradesh (MP)' },
+{ city: 'Panna', state: 'Madhya Pradesh (MP)' },
+{ city: 'Rewa', state: 'Madhya Pradesh (MP)' },
+{ city: 'Rajgarh', state: 'Madhya Pradesh (MP)' },
+{ city: 'Ratlam', state: 'Madhya Pradesh (MP)' },
+{ city: 'Raisen', state: 'Madhya Pradesh (MP)' },
+{ city: 'Sagar', state: 'Madhya Pradesh (MP)' },
+{ city: 'Satna', state: 'Madhya Pradesh (MP)' },
+{ city: 'Sehore', state: 'Madhya Pradesh (MP)' },
+{ city: 'Seoni', state: 'Madhya Pradesh (MP)' },
+{ city: 'Shahdol', state: 'Madhya Pradesh (MP)' },
+{ city: 'Shajapur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Sheopur', state: 'Madhya Pradesh (MP)' },
+{ city: 'Shivpuri', state: 'Madhya Pradesh (MP)' },
+{ city: 'Sidhi', state: 'Madhya Pradesh (MP)' },
+{ city: 'Singrauli', state: 'Madhya Pradesh (MP)' },
+{ city: 'Tikamgarh', state: 'Madhya Pradesh (MP)' },
+{ city: 'Ujjain', state: 'Madhya Pradesh (MP)' },
+{ city: 'Umaria', state: 'Madhya Pradesh (MP)' },
+{ city: 'Vidisha', state: 'Madhya Pradesh (MP)' },
+
+// Maharashtra (MH)
+{ city: 'Ahmednagar', state: 'Maharashtra (MH)' },
+{ city: 'Akola', state: 'Maharashtra (MH)' },
+{ city: 'Amravati', state: 'Maharashtra (MH)' },
+{ city: 'Aurangabad', state: 'Maharashtra (MH)' },
+{ city: 'Bhandara', state: 'Maharashtra (MH)' },
+{ city: 'Beed', state: 'Maharashtra (MH)' },
+{ city: 'Buldhana', state: 'Maharashtra (MH)' },
+{ city: 'Chandrapur', state: 'Maharashtra (MH)' },
+{ city: 'Dhule', state: 'Maharashtra (MH)' },
+{ city: 'Gadchiroli', state: 'Maharashtra (MH)' },
+{ city: 'Gondia', state: 'Maharashtra (MH)' },
+{ city: 'Hingoli', state: 'Maharashtra (MH)' },
+{ city: 'Jalgaon', state: 'Maharashtra (MH)' },
+{ city: 'Jalna', state: 'Maharashtra (MH)' },
+{ city: 'Kolhapur', state: 'Maharashtra (MH)' },
+{ city: 'Latur', state: 'Maharashtra (MH)' },
+{ city: 'Mumbai City', state: 'Maharashtra (MH)' },
+{ city: 'Mumbai Suburban', state: 'Maharashtra (MH)' },
+{ city: 'Nandurbar', state: 'Maharashtra (MH)' },
+{ city: 'Nanded', state: 'Maharashtra (MH)' },
+{ city: 'Nagpur', state: 'Maharashtra (MH)' },
+{ city: 'Nashik', state: 'Maharashtra (MH)' },
+{ city: 'Osmanabad', state: 'Maharashtra (MH)' },
+{ city: 'Parbhani', state: 'Maharashtra (MH)' },
+{ city: 'Pune', state: 'Maharashtra (MH)' },
+{ city: 'Raigad', state: 'Maharashtra (MH)' },
+{ city: 'Ratnagiri', state: 'Maharashtra (MH)' },
+{ city: 'Sindhudurg', state: 'Maharashtra (MH)' },
+{ city: 'Sangli', state: 'Maharashtra (MH)' },
+{ city: 'Solapur', state: 'Maharashtra (MH)' },
+{ city: 'Satara', state: 'Maharashtra (MH)' },
+{ city: 'Thane', state: 'Maharashtra (MH)' },
+{ city: 'Wardha', state: 'Maharashtra (MH)' },
+{ city: 'Washim', state: 'Maharashtra (MH)' },
+{ city: 'Yavatmal', state: 'Maharashtra (MH)' },
+
+// Manipur (MN)
+{ city: 'Bishnupur', state: 'Manipur (MN)' },
+{ city: 'Churachandpur', state: 'Manipur (MN)' },
+{ city: 'Chandel', state: 'Manipur (MN)' },
+{ city: 'Imphal East', state: 'Manipur (MN)' },
+{ city: 'Senapati', state: 'Manipur (MN)' },
+{ city: 'Tamenglong', state: 'Manipur (MN)' },
+{ city: 'Thoubal', state: 'Manipur (MN)' },
+{ city: 'Ukhrul', state: 'Manipur (MN)' },
+{ city: 'Imphal West', state: 'Manipur (MN)' },
+
+// Meghalaya (ML)
+{ city: 'East Garo Hills', state: 'Meghalaya (ML)' },
+{ city: 'East Khasi Hills', state: 'Meghalaya (ML)' },
+{ city: 'Jaintia Hills', state: 'Meghalaya (ML)' },
+{ city: 'Ri Bhoi', state: 'Meghalaya (ML)' },
+{ city: 'South Garo Hills', state: 'Meghalaya (ML)' },
+{ city: 'West Garo Hills', state: 'Meghalaya (ML)' },
+{ city: 'West Khasi Hills', state: 'Meghalaya (ML)' },
+
+// Mizoram (MZ)
+{ city: 'Aizawl', state: 'Mizoram (MZ)' },
+{ city: 'Champhai', state: 'Mizoram (MZ)' },
+{ city: 'Kolasib', state: 'Mizoram (MZ)' },
+{ city: 'Lawngtlai', state: 'Mizoram (MZ)' },
+{ city: 'Lunglei', state: 'Mizoram (MZ)' },
+{ city: 'Mamit', state: 'Mizoram (MZ)' },
+{ city: 'Saiha', state: 'Mizoram (MZ)' },
+{ city: 'Serchhip', state: 'Mizoram (MZ)' },
+
+// Nagaland (NL)
+{ city: 'Dimapur', state: 'Nagaland (NL)' },
+{ city: 'Kohima', state: 'Nagaland (NL)' },
+{ city: 'Mokokchung', state: 'Nagaland (NL)' },
+{ city: 'Mon', state: 'Nagaland (NL)' },
+{ city: 'Phek', state: 'Nagaland (NL)' },
+{ city: 'Tuensang', state: 'Nagaland (NL)' },
+{ city: 'Wokha', state: 'Nagaland (NL)' },
+{ city: 'Zunheboto', state: 'Nagaland (NL)' },
+
+// Odisha (OR)
+{ city: 'Angul', state: 'Odisha (OR)' },
+{ city: 'Boudh', state: 'Odisha (OR)' },
+{ city: 'Bhadrak', state: 'Odisha (OR)' },
+{ city: 'Balangir', state: 'Odisha (OR)' },
+{ city: 'Bargarh', state: 'Odisha (OR)' },
+{ city: 'Balasore', state: 'Odisha (OR)' },
+{ city: 'Cuttack', state: 'Odisha (OR)' },
+{ city: 'Debagarh', state: 'Odisha (OR)' },
+{ city: 'Dhenkanal', state: 'Odisha (OR)' },
+{ city: 'Ganjam', state: 'Odisha (OR)' },
+{ city: 'Gajapati', state: 'Odisha (OR)' },
+{ city: 'Jharsuguda', state: 'Odisha (OR)' },
+{ city: 'Jajpur', state: 'Odisha (OR)' },
+{ city: 'Jagatsinghpur', state: 'Odisha (OR)' },
+{ city: 'Khordha', state: 'Odisha (OR)' },
+{ city: 'Kendujhar (Keonjhar)', state: 'Odisha (OR)' },
+{ city: 'Kalahandi', state: 'Odisha (OR)' },
+{ city: 'Kandhamal', state: 'Odisha (OR)' },
+{ city: 'Koraput', state: 'Odisha (OR)' },
+{ city: 'Kendrapara', state: 'Odisha (OR)' },
+{ city: 'Malkangiri', state: 'Odisha (OR)' },
+{ city: 'Mayurbhanj', state: 'Odisha (OR)' },
+{ city: 'Nabarangpur', state: 'Odisha (OR)' },
+{ city: 'Nuapada', state: 'Odisha (OR)' },
+{ city: 'Nayagarh', state: 'Odisha (OR)' },
+{ city: 'Puri', state: 'Odisha (OR)' },
+{ city: 'Rayagada', state: 'Odisha (OR)' },
+{ city: 'Sambalpur', state: 'Odisha (OR)' },
+{ city: 'Subarnapur (Sonepur)', state: 'Odisha (OR)' },
+{ city: 'Sundergarh', state: 'Odisha (OR)' },
+
+// Puducherry (PY)
+{ city: 'Karaikal', state: 'Puducherry (PY)' },
+{ city: 'Mahe', state: 'Puducherry (PY)' },
+{ city: 'Pondicherry', state: 'Puducherry (PY)' },
+{ city: 'Yanam', state: 'Puducherry (PY)' },
+
+// Punjab (PB)
+{ city: 'Amritsar', state: 'Punjab (PB)' },
+{ city: 'Barnala', state: 'Punjab (PB)' },
+{ city: 'Bathinda', state: 'Punjab (PB)' },
+{ city: 'Firozpur', state: 'Punjab (PB)' },
+{ city: 'Faridkot', state: 'Punjab (PB)' },
+{ city: 'Fatehgarh Sahib', state: 'Punjab (PB)' },
+{ city: 'Fazilka', state: 'Punjab (PB)' },
+{ city: 'Gurdaspur', state: 'Punjab (PB)' },
+{ city: 'Hoshiarpur', state: 'Punjab (PB)' },
+{ city: 'Jalandhar', state: 'Punjab (PB)' },
+{ city: 'Kapurthala', state: 'Punjab (PB)' },
+{ city: 'Ludhiana', state: 'Punjab (PB)' },
+{ city: 'Mansa', state: 'Punjab (PB)' },
+{ city: 'Moga', state: 'Punjab (PB)' },
+{ city: 'Sri Muktsar Sahib', state: 'Punjab (PB)' },
+{ city: 'Pathankot', state: 'Punjab (PB)' },
+{ city: 'Patiala', state: 'Punjab (PB)' },
+{ city: 'Rupnagar', state: 'Punjab (PB)' },
+{ city: 'Ajitgarh (Mohali)', state: 'Punjab (PB)' },
+{ city: 'Sangrur', state: 'Punjab (PB)' },
+{ city: 'Nawanshahr', state: 'Punjab (PB)' },
+{ city: 'Tarn Taran', state: 'Punjab (PB)' },
+
+// Rajasthan (RJ)
+{ city: 'Ajmer', state: 'Rajasthan (RJ)' },
+{ city: 'Alwar', state: 'Rajasthan (RJ)' },
+{ city: 'Bikaner', state: 'Rajasthan (RJ)' },
+{ city: 'Barmer', state: 'Rajasthan (RJ)' },
+{ city: 'Banswara', state: 'Rajasthan (RJ)' },
+{ city: 'Bharatpur', state: 'Rajasthan (RJ)' },
+{ city: 'Baran', state: 'Rajasthan (RJ)' },
+{ city: 'Bundi', state: 'Rajasthan (RJ)' },
+{ city: 'Bhilwara', state: 'Rajasthan (RJ)' },
+{ city: 'Churu', state: 'Rajasthan (RJ)' },
+{ city: 'Chittorgarh', state: 'Rajasthan (RJ)' },
+{ city: 'Dausa', state: 'Rajasthan (RJ)' },
+{ city: 'Dholpur', state: 'Rajasthan (RJ)' },
+{ city: 'Dungarpur', state: 'Rajasthan (RJ)' },
+{ city: 'Ganganagar', state: 'Rajasthan (RJ)' },
+{ city: 'Hanumangarh', state: 'Rajasthan (RJ)' },
+{ city: 'Jhunjhunu', state: 'Rajasthan (RJ)' },
+{ city: 'Jalore', state: 'Rajasthan (RJ)' },
+{ city: 'Jodhpur', state: 'Rajasthan (RJ)' },
+{ city: 'Jaipur', state: 'Rajasthan (RJ)' },
+{ city: 'Jaisalmer', state: 'Rajasthan (RJ)' },
+{ city: 'Jhalawar', state: 'Rajasthan (RJ)' },
+{ city: 'Karauli', state: 'Rajasthan (RJ)' },
+{ city: 'Kota', state: 'Rajasthan (RJ)' },
+{ city: 'Nagaur', state: 'Rajasthan (RJ)' },
+{ city: 'Pali', state: 'Rajasthan (RJ)' },
+{ city: 'Pratapgarh', state: 'Rajasthan (RJ)' },
+{ city: 'Rajsamand', state: 'Rajasthan (RJ)' },
+{ city: 'Sikar', state: 'Rajasthan (RJ)' },
+{ city: 'Sawai Madhopur', state: 'Rajasthan (RJ)' },
+{ city: 'Sirohi', state: 'Rajasthan (RJ)' },
+{ city: 'Tonk', state: 'Rajasthan (RJ)' },
+{ city: 'Udaipur', state: 'Rajasthan (RJ)' },
+
+// Sikkim (SK)
+{ city: 'East Sikkim', state: 'Sikkim (SK)' },
+{ city: 'North Sikkim', state: 'Sikkim (SK)' },
+{ city: 'South Sikkim', state: 'Sikkim (SK)' },
+{ city: 'West Sikkim', state: 'Sikkim (SK)' },
+
+// Tamil Nadu (TN)
+{ city: 'Ariyalur', state: 'Tamil Nadu (TN)' },
+{ city: 'Chennai', state: 'Tamil Nadu (TN)' },
+{ city: 'Coimbatore', state: 'Tamil Nadu (TN)' },
+{ city: 'Cuddalore', state: 'Tamil Nadu (TN)' },
+{ city: 'Dharmapuri', state: 'Tamil Nadu (TN)' },
+{ city: 'Dindigul', state: 'Tamil Nadu (TN)' },
+{ city: 'Erode', state: 'Tamil Nadu (TN)' },
+{ city: 'Kanchipuram', state: 'Tamil Nadu (TN)' },
+{ city: 'Kanyakumari', state: 'Tamil Nadu (TN)' },
+{ city: 'Karur', state: 'Tamil Nadu (TN)' },
+{ city: 'Madurai', state: 'Tamil Nadu (TN)' },
+{ city: 'Nagapattinam', state: 'Tamil Nadu (TN)' },
+{ city: 'Nilgiris', state: 'Tamil Nadu (TN)' },
+{ city: 'Namakkal', state: 'Tamil Nadu (TN)' },
+{ city: 'Perambalur', state: 'Tamil Nadu (TN)' },
+{ city: 'Pudukkottai', state: 'Tamil Nadu (TN)' },
+{ city: 'Ramanathapuram', state: 'Tamil Nadu (TN)' },
+{ city: 'Salem', state: 'Tamil Nadu (TN)' },
+{ city: 'Sivaganga', state: 'Tamil Nadu (TN)' },
+{ city: 'Tirupur', state: 'Tamil Nadu (TN)' },
+{ city: 'Tiruchirappalli', state: 'Tamil Nadu (TN)' },
+{ city: 'Theni', state: 'Tamil Nadu (TN)' },
+{ city: 'Tirunelveli', state: 'Tamil Nadu (TN)' },
+{ city: 'Thanjavur', state: 'Tamil Nadu (TN)' },
+{ city: 'Thoothukudi', state: 'Tamil Nadu (TN)' },
+{ city: 'Tiruvallur', state: 'Tamil Nadu (TN)' },
+{ city: 'Tiruvarur', state: 'Tamil Nadu (TN)' },
+{ city: 'Tiruvannamalai', state: 'Tamil Nadu (TN)' },
+{ city: 'Vellore', state: 'Tamil Nadu (TN)' },
+{ city: 'Viluppuram', state: 'Tamil Nadu (TN)' },
+{ city: 'Virudhunagar', state: 'Tamil Nadu (TN)' },
+
+// Tripura (TR)
+{ city: 'Dhalai', state: 'Tripura (TR)' },
+{ city: 'North Tripura', state: 'Tripura (TR)' },
+{ city: 'South Tripura', state: 'Tripura (TR)' },
+{ city: 'Khowai', state: 'Tripura (TR)' },
+{ city: 'West Tripura', state: 'Tripura (TR)' },
+
+// Uttar Pradesh (UP)
+{ city: 'Agra', state: 'Uttar Pradesh (UP)' },
+{ city: 'Allahabad', state: 'Uttar Pradesh (UP)' },
+{ city: 'Aligarh', state: 'Uttar Pradesh (UP)' },
+{ city: 'Ambedkar Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Auraiya', state: 'Uttar Pradesh (UP)' },
+{ city: 'Azamgarh', state: 'Uttar Pradesh (UP)' },
+{ city: 'Barabanki', state: 'Uttar Pradesh (UP)' },
+{ city: 'Budaun', state: 'Uttar Pradesh (UP)' },
+{ city: 'Bagpat', state: 'Uttar Pradesh (UP)' },
+{ city: 'Bahraich', state: 'Uttar Pradesh (UP)' },
+{ city: 'Bijnor', state: 'Uttar Pradesh (UP)' },
+{ city: 'Ballia', state: 'Uttar Pradesh (UP)' },
+{ city: 'Banda', state: 'Uttar Pradesh (UP)' },
+{ city: 'Balrampur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Bareilly', state: 'Uttar Pradesh (UP)' },
+{ city: 'Basti', state: 'Uttar Pradesh (UP)' },
+{ city: 'Bulandshahr', state: 'Uttar Pradesh (UP)' },
+{ city: 'Chandauli', state: 'Uttar Pradesh (UP)' },
+{ city: 'Chhatrapati Shahuji Maharaj Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Chitrakoot', state: 'Uttar Pradesh (UP)' },
+{ city: 'Deoria', state: 'Uttar Pradesh (UP)' },
+{ city: 'Etah', state: 'Uttar Pradesh (UP)' },
+{ city: 'Kanshi Ram Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Etawah', state: 'Uttar Pradesh (UP)' },
+{ city: 'Firozabad', state: 'Uttar Pradesh (UP)' },
+{ city: 'Farrukhabad', state: 'Uttar Pradesh (UP)' },
+{ city: 'Fatehpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Faizabad', state: 'Uttar Pradesh (UP)' },
+{ city: 'Gautam Buddh Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Gonda', state: 'Uttar Pradesh (UP)' },
+{ city: 'Ghazipur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Gorakhpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Ghaziabad', state: 'Uttar Pradesh (UP)' },
+{ city: 'Hamirpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Hardoi', state: 'Uttar Pradesh (UP)' },
+{ city: 'Mahamaya Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Jhansi', state: 'Uttar Pradesh (UP)' },
+{ city: 'Jalaun', state: 'Uttar Pradesh (UP)' },
+{ city: 'Jyotiba Phule Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Jaunpur district', state: 'Uttar Pradesh (UP)' },
+{ city: 'Ramabai Nagar (Kanpur Dehat)', state: 'Uttar Pradesh (UP)' },
+{ city: 'Kannauj', state: 'Uttar Pradesh (UP)' },
+{ city: 'Kanpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Kaushambi', state: 'Uttar Pradesh (UP)' },
+{ city: 'Kushinagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Lalitpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Lakhimpur Kheri', state: 'Uttar Pradesh (UP)' },
+{ city: 'Lucknow', state: 'Uttar Pradesh (UP)' },
+{ city: 'Mau', state: 'Uttar Pradesh (UP)' },
+{ city: 'Meerut', state: 'Uttar Pradesh (UP)' },
+{ city: 'Maharajganj', state: 'Uttar Pradesh (UP)' },
+{ city: 'Mahoba', state: 'Uttar Pradesh (UP)' },
+{ city: 'Mirzapur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Moradabad', state: 'Uttar Pradesh (UP)' },
+{ city: 'Mainpuri', state: 'Uttar Pradesh (UP)' },
+{ city: 'Mathura', state: 'Uttar Pradesh (UP)' },
+{ city: 'Muzaffarnagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Panchsheel Nagar district (Hapur)', state: 'Uttar Pradesh (UP)' },
+{ city: 'Pilibhit', state: 'Uttar Pradesh (UP)' },
+{ city: 'Shamli', state: 'Uttar Pradesh (UP)' },
+{ city: 'Pratapgarh', state: 'Uttar Pradesh (UP)' },
+{ city: 'Rampur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Raebareli', state: 'Uttar Pradesh (UP)' },
+{ city: 'Saharanpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Sitapur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Shahjahanpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Sant Kabir Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Siddharthnagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Sonbhadra', state: 'Uttar Pradesh (UP)' },
+{ city: 'Sant Ravidas Nagar', state: 'Uttar Pradesh (UP)' },
+{ city: 'Sultanpur', state: 'Uttar Pradesh (UP)' },
+{ city: 'Shravasti', state: 'Uttar Pradesh (UP)' },
+{ city: 'Unnao', state: 'Uttar Pradesh (UP)' },
+{ city: 'Varanasi', state: 'Uttar Pradesh (UP)' },
+
+// Uttarakhand (UK)
+{ city: 'Almora', state: 'Uttarakhand (UK)' },
+{ city: 'Bageshwar', state: 'Uttarakhand (UK)' },
+{ city: 'Chamoli', state: 'Uttarakhand (UK)' },
+{ city: 'Champawat', state: 'Uttarakhand (UK)' },
+{ city: 'Dehradun', state: 'Uttarakhand (UK)' },
+{ city: 'Haridwar', state: 'Uttarakhand (UK)' },
+{ city: 'Nainital', state: 'Uttarakhand (UK)' },
+{ city: 'Pauri Garhwal', state: 'Uttarakhand (UK)' },
+{ city: 'Pithoragarh', state: 'Uttarakhand (UK)' },
+{ city: 'Rudraprayag', state: 'Uttarakhand (UK)' },
+{ city: 'Tehri Garhwal', state: 'Uttarakhand (UK)' },
+{ city: 'Udham Singh Nagar', state: 'Uttarakhand (UK)' },
+{ city: 'Uttarkashi', state: 'Uttarakhand (UK)' },
+
+// West Bengal (WB)
+{ city: 'Birbhum', state: 'West Bengal (WB)' },
+{ city: 'Bankura', state: 'West Bengal (WB)' },
+{ city: 'Bardhaman', state: 'West Bengal (WB)' },
+{ city: 'Darjeeling', state: 'West Bengal (WB)' },
+{ city: 'Dakshin Dinajpur', state: 'West Bengal (WB)' },
+{ city: 'Hooghly', state: 'West Bengal (WB)' },
+{ city: 'Howrah', state: 'West Bengal (WB)' },
+{ city: 'Jalpaiguri', state: 'West Bengal (WB)' },
+{ city: 'Cooch Behar', state: 'West Bengal (WB)' },
+{ city: 'Kolkata', state: 'West Bengal (WB)' },
+{ city: 'Maldah', state: 'West Bengal (WB)' },
+{ city: 'Paschim Medinipur', state: 'West Bengal (WB)' },
+{ city: 'Purba Medinipur', state: 'West Bengal (WB)' },
+{ city: 'Murshidabad', state: 'West Bengal (WB)' },
+{ city: 'Nadia', state: 'West Bengal (WB)' },
+{ city: 'North 24 Parganas', state: 'West Bengal (WB)' },
+{ city: 'South 24 Parganas', state: 'West Bengal (WB)' },
+{ city: 'Purulia', state: 'West Bengal (WB)' },
+{ city: 'Uttar Dinajpur', state: 'West Bengal (WB)' }
+];
+
+
+        // City suggestion filter
+        cityInput.addEventListener('input', () => {
+            const query = cityInput.value.toLowerCase();
+            cityListDiv.innerHTML = '';
+
+            if (query.length > 0) {
+                const filteredCities = cities.filter(item => item.city.toLowerCase().startsWith(query));
+                filteredCities.forEach(item => {
+                    const div = document.createElement('div');
+                    div.classList.add('suggestion-item');
+                    div.textContent = `${item.city}, ${item.state}`;
+                    div.addEventListener('click', () => {
+                        cityInput.value = item.city;
+                        cityListDiv.innerHTML = '';
+                    });
+                    cityListDiv.appendChild(div);
+                });
+            }
+        });
+
+        // Weather form submission
+        document.getElementById('weather-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const city = cityInput.value.trim();
+            if (!city) return;
+
+            weatherDiv.style.display = 'block';
+            weatherDiv.textContent = 'Loading weather data...';
+
+            const url = `https://open-weather13.p.rapidapi.com/city/${city}/EN`;
+            const options = {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': '9baf8268aamshb6d98103696a21cp127851jsn981f4867c007',
+                    'x-rapidapi-host': 'open-weather13.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                displayWeather(result);
+            } catch (error) {
+                console.error(error);
+                weatherDiv.textContent = 'Failed to load weather data. Please try again.';
+            }
+        });
+
+        // Function to display weather data
+        function displayWeather(data) {
+            if (data && data.main) {
+                const temperature = Math.round((data.main.temp-32)*(5/9));
+                const condition = data.weather[0].description;
+                const humidity = data.main.humidity;
+                const windSpeed = data.wind.speed;
+
+                const weatherHTML = `
+                    <h2>Weather in ${data.name}</h2>
+                    <div class="weather-item">
+                        <p><strong>Temperature:</strong> ${temperature}°C</p>
+                        <p><strong>Condition:</strong> ${condition}</p>
+                        <p><strong>Humidity:</strong> ${humidity}%</p>
+                        <p><strong>Wind Speed:</strong> ${windSpeed} m/s</p>
+                    </div>
+                `;
+                weatherDiv.innerHTML = weatherHTML;
+            } else {
+                weatherDiv.textContent = 'No weather data available for the provided city.';
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  
+
+</body>
+</html>
